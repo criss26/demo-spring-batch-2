@@ -53,7 +53,7 @@ public class JobConfiguration {
 		System.out.println("pagingItemReader");
 		JdbcPagingItemReader<Transaction> reader = new JdbcPagingItemReader<>();
 		reader.setDataSource(this.dataSource);
-		reader.setFetchSize(10);
+		reader.setFetchSize(2);
 		reader.setRowMapper(new TransactionRowMapper());
 
 		MySqlPagingQueryProvider queryProvider = new MySqlPagingQueryProvider();
@@ -74,6 +74,7 @@ public class JobConfiguration {
 	
 	@Bean
 	public ItemWriter<Transaction> transactionItemWriter() {
+		System.out.println("transactionItemWriter");
 		return items -> {
 			for (Transaction item : items) {
 				System.out.println(item.toString());
@@ -101,7 +102,7 @@ public class JobConfiguration {
 	@Bean
 	public Step step1() {
 		return stepBuilderFactory.get("step1")
-				.<Transaction, Transaction>chunk(10)
+				.<Transaction, Transaction>chunk(2)
 				.reader(pagingItemReader())
 				.processor(processor())
 				.writer(transactionItemWriter())

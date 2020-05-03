@@ -8,6 +8,8 @@ public class TransactionItemProcessor implements ItemProcessor<Transaction, Tran
 	@Override
 	public Transaction process(Transaction item) throws Exception {
 		
+		System.out.println("process "+item.toString());
+		
 		final Long id = item.getId();
 		final String description = item.getDescription().toUpperCase();
 
